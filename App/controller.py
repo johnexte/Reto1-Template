@@ -35,28 +35,69 @@ def new_controller():
     """
     Crea una instancia del modelo
     """
-    #TODO: Llamar la función del modelo que crea las estructuras de datos
-    pass
+    return model.new_data_structs()
 
 
 # Funciones para la carga de datos
 
-def load_data(control, filename):
+def load_data(control, prefix):
     """
     Carga los datos del reto
     """
-    # TODO: Realizar la carga de datos
-    pass
+    number_jobs = load_jobs(control, prefix)
+    number_multilocation = load_multilocation(control, prefix)
+    number_skills = load_skills(control, prefix)
+    number_employments = load_employments(control, prefix)
+    return number_jobs, number_multilocation, number_skills, number_employments
 
+def load_jobs(control, prefix):
+    """
+    Carga los datos de los trabajos
+    """
+    file_name = prefix + '-jobs.csv'
+    input_file = csv.DictReader(open(file_name, encoding='utf-8'))
+    for job in input_file:
+        model.add_data(control, job, 'jobs')
+    sort(control["jobs"])
+    return model.data_size(control, 'jobs')
 
+def load_multilocation(control, prefix):
+    """
+    Carga los datos de los trabajos
+    """
+    file_name = prefix + '-multilocation.csv'
+    input_file = csv.DictReader(open(file_name, encoding='utf-8'))
+    for multilocation in input_file:
+        model.add_data(control, multilocation, 'multilocation')
+    return model.data_size(control, 'multilocation')
+
+def load_skills(control, prefix):
+    """
+    Carga los datos de los trabajos
+    """
+    file_name = prefix + '-skills.csv'
+    input_file = csv.DictReader(open(file_name, encoding='utf-8'))
+    for skill in input_file:
+        model.add_data(control, skill, 'skills')
+    return model.data_size(control, 'skills')
+
+def load_employments(control, prefix):
+    """
+    Carga los datos de los trabajos
+    """
+    file_name = prefix + '-employments.csv'
+    input_file = csv.DictReader(open(file_name, encoding='utf-8'))
+    for employment in input_file:
+        model.add_data(control, employment, 'employments')
+    return model.data_size(control, 'employments')
+    
 # Funciones de ordenamiento
 
-def sort(control):
+def sort(lista):
     """
     Ordena los datos del modelo
     """
-    #TODO: Llamar la función del modelo para ordenar los datos
-    pass
+    model.sort(lista)
 
 
 # Funciones de consulta sobre el catálogo
@@ -69,51 +110,45 @@ def get_data(control, id):
     pass
 
 
-def req_1(control):
+def req_1(control, codigo_pais, nivel_experiencia):
     """
     Retorna el resultado del requerimiento 1
     """
-    # TODO: Modificar el requerimiento 1
-    pass
+    return model.req_1(control, codigo_pais, nivel_experiencia)
 
 
-def req_2(control):
+def req_2(control, nombre_empresa, nombre_ciudad):
     """
     Retorna el resultado del requerimiento 2
     """
-    # TODO: Modificar el requerimiento 2
-    pass
+    return model.req_2(control, nombre_empresa, nombre_ciudad)
 
 
-def req_3(control):
+def req_3(control, nombre_empresa, fecha_inicio, fecha_fin):
     """
     Retorna el resultado del requerimiento 3
     """
-    # TODO: Modificar el requerimiento 3
-    pass
+    return model.req_3(control, nombre_empresa, fecha_inicio, fecha_fin)
 
 
-def req_4(control):
+def req_4(control, codigo_pais, fecha_inicio, fecha_fin):
     """
     Retorna el resultado del requerimiento 4
     """
-    # TODO: Modificar el requerimiento 4
-    pass
+    return model.req_4(control, codigo_pais, fecha_inicio, fecha_fin)
 
 
-def req_5(control):
+def req_5(control, nombre_ciuadad, fecha_inicio, fecha_fin):
     """
     Retorna el resultado del requerimiento 5
     """
-    # TODO: Modificar el requerimiento 5
-    pass
+    return model.req_5(control, nombre_ciuadad, fecha_inicio, fecha_fin)
 
-def req_6(control):
+def req_6(control, codigo_pais, nivel_experiencia, fecha_inicio, fecha_fin):
     """
     Retorna el resultado del requerimiento 6
     """
-    # TODO: Modificar el requerimiento 6
-    pass
+    return model.req_6(control, codigo_pais, nivel_experiencia, fecha_inicio, fecha_fin)
 
 
 def req_7(control):

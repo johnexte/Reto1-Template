@@ -42,8 +42,7 @@ def new_controller():
     """
         Se crea una instancia del controlador
     """
-    #TODO: Llamar la función del controlador donde se crean las estructuras de datos
-    pass
+    return controller.new_controller()
 
 
 def print_menu():
@@ -64,9 +63,68 @@ def load_data(control):
     """
     Carga los datos
     """
-    #TODO: Realizar la carga de datos
-    pass
+    prefix = select_size()
+    number_jobs, number_multilocation, number_skills, number_employments = controller.load_data(control, prefix)
+    lista_jobs = controller["jobs"]
+    lista = primeros_y_ultimos_n(lista_jobs, 3)
+    return lista, number_jobs, number_multilocation, number_skills, number_employments
 
+def select_size():
+    """
+    Selecciona el tamaño de la muestra
+    """
+    print("Seleccione el tamaño de la muestra")
+    print("1- Small")
+    print("2- 10%")
+    print("3- 20%")
+    print("4- 30%")
+    print("5- 40%")
+    print("6- 50%")
+    print("7- medium")
+    print("8- 60%")
+    print("9- 70%")
+    print("10- 80%")
+    print("11- 90%")
+    print("12- Large")
+
+    inputs = input('Seleccione una opción para continuar\n')
+    if int(inputs) == 1:
+        return "small"
+    elif int(inputs) == 2:
+        return "10"
+    elif int(inputs) == 3:
+        return "20"
+    elif int(inputs) == 4:
+        return "30"
+    elif int(inputs) == 5:
+        return "40"
+    elif int(inputs) == 6:
+        return "50"
+    elif int(inputs) == 7:
+        return "medium"
+    elif int(inputs) == 8:
+        return "60"
+    elif int(inputs) == 9:
+        return "70"
+    elif int(inputs) == 10:
+        return "80"
+    elif int(inputs) == 11:
+        return "90"
+    elif int(inputs) == 12:
+        return "large"
+    else:
+        print("Opción errónea, vuelva a elegir.\n")
+        return select_size()
+    
+def primeros_y_ultimos_n(lista, n):
+    """
+    Retorna los primeros y últimos n elementos de una lista
+    """
+    primeros = lt.subList(lista, 1, n)
+    ultimos = lt.subList(lista, lt.size(lista)-n, n)
+    for i in range(lt.size(ultimos)):
+        lt.addLast(primeros, lt.getElement(ultimos, i))
+    return primeros
 
 def print_data(control, id):
     """
@@ -79,48 +137,93 @@ def print_req_1(control):
     """
         Función que imprime la solución del Requerimiento 1 en consola
     """
-    # TODO: Imprimir el resultado del requerimiento 1
-    pass
+    numero_ofertas = int(input("Ingrese el número de ofertas que desea filtrar: "))
+    codigo_pais = input("Ingrese el código del país que desea filtrar: ")
+    nivel_experiencia = input("Ingrese el nivel de experiencia que desea filtrar: ")
+    lista = controller.req_1(control, codigo_pais, nivel_experiencia)
+    lista_n = lt.subList(lista, 1, numero_ofertas)
+    print("El numero de ofertas encontradas es: " + str(lt.size(lista)))
+    print(tabulate(lt.iterator(lista_n), headers="keys", tablefmt="grid"))
+    
 
 
 def print_req_2(control):
     """
         Función que imprime la solución del Requerimiento 2 en consola
     """
-    # TODO: Imprimir el resultado del requerimiento 2
-    pass
+    numero_ofertas = int(input("Ingrese el número de ofertas que desea filtrar: "))
+    nombre_empresa = input("Ingrese el nombre de la empresa que desea filtrar: ")
+    nombre_ciudad = input("Ingrese el nombre de la ciudad que desea filtrar: ")
+    lista = controller.req_2(control, nombre_empresa, nombre_ciudad)
+    lista_n = lt.subList(lista, 1, numero_ofertas)
+    print("El numero de ofertas encontradas es: " + str(lt.size(lista)))
+    print(tabulate(lt.iterator(lista_n), headers="keys", tablefmt="grid"))
 
 
 def print_req_3(control):
     """
         Función que imprime la solución del Requerimiento 3 en consola
     """
-    # TODO: Imprimir el resultado del requerimiento 3
-    pass
-
+    nombre_empresa = input("Ingrese el nombre de la empresa que desea filtrar: ")
+    fecha_inicio = input("Ingrese la fecha de inicio que desea filtrar: ")
+    fecha_fin = input("Ingrese la fecha de fin que desea filtrar: ")
+    lista, numero_junior, numero_mid, numero_senior = controller.req_3(control, nombre_empresa, fecha_inicio, fecha_fin)
+    print("El numero de empleados encontrados es: " + str(lt.size(lista)))
+    print("El numero de empleados junior es: " + str(numero_junior))
+    print("El numero de empleados mid es: " + str(numero_mid))
+    print("El numero de empleados senior es: " + str(numero_senior))
+    print(tabulate(lt.iterator(lista), headers="keys", tablefmt="grid"))
 
 def print_req_4(control):
     """
         Función que imprime la solución del Requerimiento 4 en consola
     """
-    # TODO: Imprimir el resultado del requerimiento 4
-    pass
+    codigo_pais = input("Ingrese el código del país que desea filtrar: ")
+    fecha_inicio = input("Ingrese la fecha de inicio que desea filtrar: ")
+    fecha_fin = input("Ingrese la fecha de fin que desea filtrar: ")
+    lista, numero_empresas, numero_ciudades, ciudad_mayor_ofertas, ciudad_menor_ofertas = controller.req_4(control, codigo_pais, fecha_inicio, fecha_fin)
+    print("El numero de ofertas encontradas es: " + str(lt.size(lista)))
+    print("El numero de empresas encontradas es: " + str(numero_empresas))
+    print("El numero de ciudades encontradas es: " + str(numero_ciudades))
+    print("La ciudad con mayor número de ofertas es: " + ciudad_mayor_ofertas)
+    print("La ciudad con menor número de ofertas es: " + ciudad_menor_ofertas)
+    print(tabulate(lt.iterator(lista), headers="keys", tablefmt="grid"))
+    
 
 
 def print_req_5(control):
     """
         Función que imprime la solución del Requerimiento 5 en consola
     """
-    # TODO: Imprimir el resultado del requerimiento 5
-    pass
+    nombre_ciuadad = input("Ingrese el nombre de la ciudad que desea filtrar: ")
+    fecha_inicio = input("Ingrese la fecha de inicio que desea filtrar: ")
+    fecha_fin = input("Ingrese la fecha de fin que desea filtrar: ")
+    lista, numero_empresas, empresa_mas_ofertas, empresa_menos_ofertas = controller.req_5(control, nombre_ciuadad, fecha_inicio, fecha_fin)
+    print("El numero de ofertas encontradas es: " + str(lt.size(lista)))
+    print("El numero de empresas encontradas es: " + str(numero_empresas))
+    print("La empresa con mayor número de ofertas es: " + empresa_mas_ofertas)
+    print("La empresa con menor número de ofertas es: " + empresa_menos_ofertas)
+    print(tabulate(lt.iterator(lista), headers="keys", tablefmt="grid"))
 
 
 def print_req_6(control):
     """
         Función que imprime la solución del Requerimiento 6 en consola
     """
-    # TODO: Imprimir el resultado del requerimiento 6
-    pass
+    numero_ofertas = int(input("Ingrese el número de ofertas que desea filtrar: "))
+    codigo_pais = input("Ingrese el código del país que desea filtrar: ")
+    nivel_experiencia = input("Ingrese el nivel de experiencia que desea filtrar: ")
+    fecha_inicio = input("Ingrese la fecha de inicio que desea filtrar: ")
+    fecha_fin = input("Ingrese la fecha de fin que desea filtrar: ")
+    numero_ciudades, numero_empresas, promedio_salario, ciudad_mayor, numero_ciudades_mayor, ciudad_menor, numero_ciudades_menor = controller.req_6(control, codigo_pais, nivel_experiencia, fecha_inicio, fecha_fin)
+    lista_n = lt.subList(lista, 1, numero_ofertas)
+    print("El numero de ciudades encontradas es: " + str(numero_ciudades))
+    print("El numero de empresas encontradas es: " + str(numero_empresas))
+    print("El promedio de salario es: " + str(promedio_salario))
+    print("La ciudad con mayor número de ofertas es: " + ciudad_mayor + " con " + str(numero_ciudades_mayor) + " ofertas")
+    print("La ciudad con menor número de ofertas es: " + ciudad_menor + " con " + str(numero_ciudades_menor) + " ofertas")
+    print(tabulate(lt.iterator(lista_n), headers="keys", tablefmt="grid"))
+    
 
 
 def print_req_7(control):
@@ -154,7 +257,14 @@ if __name__ == "__main__":
         inputs = input('Seleccione una opción para continuar\n')
         if int(inputs) == 1:
             print("Cargando información de los archivos ....\n")
-            data = load_data(control)
+            lista, number_jobs, number_multilocation, number_skills, number_employments = load_data(control)
+            print("Se cargaron " + str(number_jobs) + " trabajos")
+            print("Se cargaron " + str(number_multilocation) + " multilocalizaciones")
+            print("Se cargaron " + str(number_skills) + " habilidades")
+            print("Se cargaron " + str(number_employments) + " empleos")
+            print("Los primeros y últimos 3 trabajos son: ")
+            print(tabulate(lt.iterator(lista), headers="keys", tablefmt="grid"))
+            
         elif int(inputs) == 2:
             print_req_1(control)
 
